@@ -1,0 +1,23 @@
+{
+  "precision_dps": 1300,
+  "branches": [
+    2,
+    3,
+    6,
+    9,
+    27
+  ],
+  "orders": [
+    4,
+    8,
+    12,
+    24
+  ],
+  "moment_conditions_passed": true,
+  "stability_constants_passed": true,
+  "representative_slopes_passed": true,
+  "analytic_remainder_bounds_passed": true,
+  "dyadic_chord_recursion_passed": true,
+  "linear_tripling_seed_asymptotic_passed": true,
+  "verification_passed": true
+}

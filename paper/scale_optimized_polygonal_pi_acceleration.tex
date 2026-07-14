@@ -1,0 +1,533 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=0.92in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\Pacc}{\widehat P}
+\newcommand{\RR}{\mathbb{R}}
+
+\title{\textbf{Scale-Optimized Geometric Acceleration of Polygonal Approximations to $\pi$}}
+\author{C. Wayne Baker\\Independent Researcher}
+\date{May 9, 2026; revised July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Let
+\[
+  P_N=N\sin\!\left(\frac{\pi}{N}\right)
+\]
+be the half-perimeter of the regular $2N$-gon inscribed in the unit circle.
+Its error contains only even powers of $N^{-1}$.  For an integer scale
+factor $b\ge2$ and an order $r\ge1$, we form
+\[
+  \Pacc^{[r]}_{N,b}
+  =\sum_{m=0}^{r-1}w_m^{(r,b)}P_{b^mN},
+\]
+where the weights are the Lagrange extrapolation weights at $x=0$ for the
+geometric nodes $x_m=b^{-2m}$.  The first $r-1$ even-power errors cancel,
+so
+\[
+  \Pacc^{[r]}_{N,b}-\pi=O(N^{-2r}).
+\]
+For geometric nodes, the weights are uniformly stable in $r$:
+\[
+  \sum_{m=0}^{r-1}|w_m^{(r,b)}|
+  \le
+  S_b,
+  \qquad
+  S_b=\prod_{\ell=1}^{\infty}
+  \frac{1+b^{-2\ell}}{1-b^{-2\ell}}.
+\]
+An explicit sine-remainder bound then quantifies the accelerated error.
+High-precision computations verify the predicted slopes through $r=24$ for
+$b=2,3,6,9,27$.
+
+The constructibility status is separated carefully.  The dyadic branch is
+exactly compass-and-straightedge constructible by nested square roots.  Exact
+tripling requires a cubic inversion and is not generally constructible.  A
+constructible linear chord seed has error $O(N^{-3})$, and a general
+perturbation theorem states the accuracy required of any approximate tripling
+mechanism to preserve an $r$-scale hierarchy.  No exact construction of every
+regular $3N$-gon is claimed.
+\end{abstract}
+
+\section{Introduction and Claim Boundary}
+
+The classical polygon sequence
+\[
+  P_N=N\sin\!\left(\frac{\pi}{N}\right)
+\]
+converges to $\pi$ with second-order error.  The important fact is not only
+that the error is small, but that it is structured:
+\[
+  P_N
+  =\pi+\frac{C_2}{N^2}+\frac{C_4}{N^4}+\frac{C_6}{N^6}+\cdots.
+\]
+This permits exact cross-scale cancellation of successive error terms.
+
+The paper has four principal claims.
+\begin{enumerate}[label=(\roman*)]
+  \item Geometric scale weights cancel the first $r-1$ even-power modes.
+  \item For nodes $b^{-2m}$, the total weight amplification is uniformly
+        bounded in $r$.
+  \item The remaining analytic error has an explicit factorial bound.
+  \item Scale selection is a tradeoff: increasing $b$ improves weight
+        stability but increases geometric work.
+\end{enumerate}
+
+The word \emph{geometric} refers to the polygonal source sequence and its
+scale hierarchy.  It does not imply that every scale branch is exactly
+straightedge-and-compass constructible.  The branch $b=2$ is exact and
+constructible.  Branches containing a factor of $3$ are analytic or numerical
+scale architectures unless a separate approximate trisection construction is
+supplied with a sufficient error certificate.
+
+\section{The Even-Power Polygonal Expansion}
+
+Using the sine series,
+\[
+  \sin z=z-\frac{z^3}{3!}+\frac{z^5}{5!}-\frac{z^7}{7!}+\cdots,
+\]
+with $z=\pi/N$, one obtains
+\[
+  P_N
+  =\pi-\frac{\pi^3}{6N^2}
+  +\frac{\pi^5}{120N^4}
+  -\frac{\pi^7}{5040N^6}+\cdots.
+\]
+More generally,
+\[
+  P_N
+  =\pi+\sum_{j=1}^{\infty}
+  (-1)^j\frac{\pi^{2j+1}}{(2j+1)!}N^{-2j}.
+\]
+Only even powers of $N^{-1}$ occur because $\sin z/z$ is an even analytic
+function.
+
+\begin{definition}[Even-power error structure]
+A sequence $Q_N\to Q$ has an even-power error structure if
+\[
+  Q_N=Q+C_2N^{-2}+C_4N^{-4}+C_6N^{-6}+\cdots.
+\]
+\end{definition}
+
+\section{Scale-$b$ Acceleration}
+
+Fix an integer $b\ge2$ and an order $r\ge1$.  Define
+\[
+  x_m=b^{-2m},\qquad m=0,1,\ldots,r-1.
+\]
+The Lagrange weights for evaluating at $x=0$ are
+\[
+  w_m^{(r,b)}
+  =\prod_{\substack{0\le i\le r-1\\ i\ne m}}
+  \frac{-x_i}{x_m-x_i}.
+\]
+The accelerated polygonal approximation is
+\[
+  \Pacc^{[r]}_{N,b}
+  =\sum_{m=0}^{r-1}w_m^{(r,b)}P_{b^mN}.
+\]
+The weights satisfy
+\[
+  \sum_{m=0}^{r-1}w_m^{(r,b)}=1
+\]
+and, for $j=1,\ldots,r-1$,
+\[
+  \sum_{m=0}^{r-1}w_m^{(r,b)}b^{-2jm}=0.
+\]
+
+\begin{theorem}[Scale-$b$ cancellation]
+Suppose
+\[
+  Q_N=Q+\sum_{j=1}^{r-1}C_{2j}N^{-2j}+O(N^{-2r}).
+\]
+Then
+\[
+  \widehat Q^{[r]}_{N,b}
+  :=\sum_{m=0}^{r-1}w_m^{(r,b)}Q_{b^mN}
+  =Q+O(N^{-2r}).
+\]
+\end{theorem}
+
+\begin{proof}
+Substitution gives
+\[
+\widehat Q^{[r]}_{N,b}
+=Q\sum_mw_m^{(r,b)}
++\sum_{j=1}^{r-1}C_{2j}N^{-2j}
+ \sum_mw_m^{(r,b)}b^{-2jm}
++O(N^{-2r}).
+\]
+The unity condition preserves $Q$, and the moment conditions cancel the first
+$r-1$ error modes.
+\end{proof}
+
+For $r=2$,
+\[
+  \Pacc^{[2]}_{N,b}
+  =P_{bN}+\frac{P_{bN}-P_N}{b^2-1}
+  =\pi+O(N^{-4}).
+\]
+For $b=2$ and $r=3$,
+\[
+  \Pacc^{[3]}_{N,2}
+  =\frac{1}{45}P_N-\frac{4}{9}P_{2N}
+   +\frac{64}{45}P_{4N}
+  =\pi+O(N^{-6}).
+\]
+The coefficient $1/45$ is essential; a surviving draft incorrectly displayed
+$1/64$.
+
+\section{Geometric-Node Weight Stability}
+
+Set $q=b^{-2}$ and use the notation
+\[
+  (q;q)_n=\prod_{\ell=1}^{n}(1-q^\ell),
+  \qquad (q;q)_0=1.
+\]
+
+\begin{lemma}[Closed weight formula]
+Let $s=r-1-m$.  Then
+\[
+  |w_m^{(r,b)}|
+  =\frac{q^{s(s+1)/2}}{(q;q)_m(q;q)_s}.
+\]
+\end{lemma}
+
+\begin{proof}
+Split the defining product into factors with $i<m$ and $i>m$.  After
+factoring the powers of $q$, the remaining products are precisely
+$(q;q)_m$ and $(q;q)_s$.
+\end{proof}
+
+\begin{theorem}[Uniform stability]
+For every $r\ge1$,
+\[
+  \sum_{m=0}^{r-1}|w_m^{(r,b)}|
+  \le S_b,
+\]
+where
+\[
+  S_b
+  =\prod_{\ell=1}^{\infty}
+   \frac{1+b^{-2\ell}}{1-b^{-2\ell}}<\infty.
+\]
+\end{theorem}
+
+\begin{proof}
+Writing $s=r-1-m$ and using $(q;q)_{r-1-s}\ge(q;q)_\infty$,
+\[
+\sum_{m=0}^{r-1}|w_m^{(r,b)}|
+\le\frac{1}{(q;q)_\infty}
+\sum_{s=0}^{\infty}\frac{q^{s(s+1)/2}}{(q;q)_s}.
+\]
+Euler's product identity gives
+\[
+  \sum_{s=0}^{\infty}\frac{q^{s(s+1)/2}}{(q;q)_s}
+  =(-q;q)_\infty.
+\]
+Therefore the bound is
+\[
+  \frac{(-q;q)_\infty}{(q;q)_\infty}
+  =\prod_{\ell=1}^{\infty}\frac{1+q^\ell}{1-q^\ell}.
+\]
+\end{proof}
+
+The corrected constants for the tested branches are shown in
+Table~\ref{tab:stability}.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccc}
+\toprule
+$b$ & $q=b^{-2}$ & $S_b$\\
+\midrule
+2  & $1/4$   & $1.969260353668269\ldots$\\
+3  & $1/9$   & $1.285210586391831\ldots$\\
+6  & $1/36$  & $1.058822194456829\ldots$\\
+9  & $1/81$  & $1.025316406852818\ldots$\\
+27 & $1/729$ & $1.002751031629743\ldots$\\
+\bottomrule
+\end{tabular}
+\caption{Uniform stability constants.  The May concept PDF rounded the
+$b=2$ constant incorrectly; the value above is independently recomputed.}
+\label{tab:stability}
+\end{table}
+
+\section{Explicit Analytic Remainder Bound}
+
+\begin{theorem}[Sine-remainder bound]
+Let $N\ge6$, $b\ge2$, and $r\ge1$.  Then
+\[
+  \left|\Pacc^{[r]}_{N,b}-\pi\right|
+  \le
+  \frac{\pi^{2r+1}}{(2r+1)!}N^{-2r}
+  \sum_{m=0}^{r-1}|w_m^{(r,b)}|b^{-2rm}.
+\]
+Consequently,
+\[
+  \left|\Pacc^{[r]}_{N,b}-\pi\right|
+  \le
+  S_b\frac{\pi^{2r+1}}{(2r+1)!}N^{-2r}.
+\]
+\end{theorem}
+
+\begin{proof}
+At scale $b^mN$, subtract the first $r-1$ nonconstant sine terms.  Since
+$\pi/(b^mN)\le\pi/6<1$, the alternating Taylor remainder is bounded by its
+first omitted term:
+\[
+  |R_r(b^mN)|
+  \le\frac{\pi^{2r+1}}{(2r+1)!}(b^mN)^{-2r}.
+\]
+The acceleration weights cancel the retained terms.  Applying the triangle
+inequality yields the first estimate; dropping $b^{-2rm}\le1$ and invoking
+the stability theorem gives the second.
+\end{proof}
+
+\section{High-Precision Verification}
+
+The accompanying script evaluates the weights, moment residuals, stability
+constants, accelerated errors, and observed slopes.  For a fixed $b$ and $r$,
+the slope is obtained by a least-squares fit of
+\[
+  \log_{10}|\Pacc^{[r]}_{N,b}-\pi|
+\]
+against $\log_{10}N$ over $N=16,20,24,32$.  The predicted slope is $-2r$.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{ccc}
+\toprule
+Scale $b$ & Order $r$ & Observed slope\\
+\midrule
+2  & 24 & $-47.9999784973\ldots$\\
+3  & 24 & $-47.9999818571\ldots$\\
+6  & 24 & $-47.9999834123\ldots$\\
+9  & 24 & $-47.9999836714\ldots$\\
+27 & 24 & $-47.9999838509\ldots$\\
+\bottomrule
+\end{tabular}
+\caption{Representative 1300-digit slope audit.  The predicted value is
+$-48$.}
+\label{tab:slopes}
+\end{table}
+
+These computations are checks of the formulas, not substitutes for the
+proofs.  Their main use is to confirm that high-order cancellation remains
+numerically visible when sufficient working precision is used.
+
+\section{Scale Choice: Stability Versus Work}
+
+The stability constant satisfies
+\[
+  S_b\longrightarrow1\qquad(b\to\infty),
+\]
+so larger scale ratios reduce coefficient amplification.  This does not by
+itself identify an optimal scale.  If the cost of constructing or evaluating a
+polygon is proportional to its side count, a simple work proxy is
+\[
+  W_b(r)=\sum_{m=0}^{r-1}b^m=\frac{b^r-1}{b-1}.
+\]
+For fixed $r$, $W_b(r)$ grows rapidly with $b$, while $S_b$ improves only
+toward $1$.  Thus scale selection balances at least three quantities:
+\[
+  \text{scale separation},\qquad
+  \text{weight stability},\qquad
+  \text{construction cost}.
+\]
+There is no universal optimum without a specified cost model.  Earlier claims
+that one tested branch is globally ``best'' should be read only relative to
+the particular empirical normalization used in that computation.
+
+\section{Constructibility Status}
+
+Let
+\[
+  c_N=2\sin\!\left(\frac{\pi}{N}\right),
+  \qquad P_N=\frac{N}{2}c_N.
+\]
+For the dyadic branch, starting from $c_6=1$, the stable bisection recurrence is
+\[
+  c_{2N}
+  =\frac{c_N}{\sqrt{2+\sqrt{4-c_N^2}}}.
+\]
+It uses only rational operations and square roots.  Therefore all dyadic
+polygon values and all rationally weighted dyadic accelerants are
+compass-and-straightedge constructible.
+
+For exact tripling, the triple-angle identity gives
+\[
+  c_N=3c_{3N}-c_{3N}^3.
+\]
+Hence $u=c_{3N}$ is the small positive root of
+\[
+  u^3-3u+c_N=0.
+\]
+This cubic is not generally solvable by compass and straightedge.  In
+particular, the regular $18$-gon is not constructible, so
+\[
+  6\to18\to54\to\cdots
+\]
+cannot be presented as a ladder of exact constructible regular polygons.
+
+\subsection{A Constructible Linear Seed}
+
+\begin{proposition}[Linear tripling seed]
+Define
+\[
+  \widetilde c^{(0)}_{3N}=\frac{c_N}{3}.
+\]
+This segment is constructible from $c_N$, and
+\[
+  \widetilde c^{(0)}_{3N}-c_{3N}
+  =-\frac{8\pi^3}{81}N^{-3}+O(N^{-5}).
+\]
+In particular, the chord seed error is $O(N^{-3})$.
+\end{proposition}
+
+\begin{proof}
+Set $x=\pi/N$.  Then
+\[
+  \frac{c_N}{3}=\frac{2}{3}\sin x
+  =\frac{2x}{3}-\frac{x^3}{9}+O(x^5),
+\]
+whereas
+\[
+  c_{3N}=2\sin(x/3)
+  =\frac{2x}{3}-\frac{x^3}{81}+O(x^5).
+\]
+Subtract and replace $x$ by $\pi/N$.
+\end{proof}
+
+\subsection{Perturbation Requirement}
+
+Suppose the chord used at scale $M=b^mN$ is perturbed by $\delta_M$.  Since
+$P_M=(M/2)c_M$, the accelerated perturbation is bounded by
+\[
+  \frac{N}{2}\sum_{m=0}^{r-1}
+  |w_m^{(r,b)}|b^m|\delta_{b^mN}|.
+\]
+
+\begin{theorem}[Sufficient perturbation exponent]
+For fixed $b$ and $r$, suppose
+\[
+  |\delta_M|\le AM^{-\alpha}
+\]
+for all scales used by the operator.  If
+\[
+  \alpha\ge2r+1,
+\]
+then the perturbation contribution is $O(N^{-2r})$ and therefore does not
+change the formal order of the accelerated hierarchy.
+\end{theorem}
+
+\begin{proof}
+Substitution gives
+\[
+\frac{N}{2}\sum_m|w_m|b^m|\delta_{b^mN}|
+\le
+\frac{A}{2}N^{1-\alpha}
+\sum_m|w_m|b^{m(1-\alpha)}.
+\]
+For fixed $r$, the finite weighted sum is independent of $N$.  If
+$\alpha\ge2r+1$, then $N^{1-\alpha}=O(N^{-2r})$.
+\end{proof}
+
+\begin{remark}[Conditional cubic refinement]
+If an independently documented constructible refinement map has a local error
+law
+\[
+  e_+=Ce^3+O(e^5)
+\]
+and if the $O(N^{-3})$ seed lies in its uniform local basin, then after $s$
+refinements its error exponent becomes $3^{s+1}$.  The exponent condition
+\[
+  3^{s+1}\ge2r+1
+\]
+is sufficient asymptotically.  This statement is conditional on the actual
+geometric realization and its domain; the present paper does not treat odd
+symmetry alone as proof that the linear term vanishes, nor does it claim a
+standalone exact trisection operator.
+\end{remark}
+
+\section{Limitations}
+
+The fixed-$r$ acceleration law is polynomial in the resolution variable and
+is not a competitor to AGM or modular-form algorithms as an arithmetic method
+for computing $\pi$.  The numerical branch comparison depends on the selected
+cost normalization.  Exact tripling data generated by cubic root-solving are
+valid for testing the scale architecture but are not straightedge-and-compass
+constructions.  A fully geometric tripling implementation requires a separate,
+explicit construction and an error certificate satisfying the perturbation
+condition above.
+
+The paper also does not claim that the cancellation algebra is new.  It is a
+Richardson-type extrapolation.  The contribution is the geometric-node
+stability analysis, the explicit remainder control, the scale/work comparison,
+and the precise separation of exact dyadic constructibility from approximate
+tripling.
+
+\section{Conclusion}
+
+The polygonal sequence is a scale-indexed carrier of removable error
+structure.  The scale-$b$ operator cancels the first $r-1$ even-power modes,
+its geometric-node weights are uniformly stable, and the remaining sine tail
+has an explicit factorial bound.  Larger scales improve weight stability but
+also increase work, so optimization requires a cost model rather than a
+largest-scale rule.
+
+The constructibility conclusion is equally precise.  Dyadic refinement is
+exactly constructible.  Exact tripling is generally not.  Approximate tripling
+can nevertheless be studied quantitatively: the linear chord seed is
+constructible with $O(N^{-3})$ error, and any refinement mechanism meeting the
+required perturbation exponent preserves the accelerated order.
+
+\[
+  \boxed{\text{The circle is approached not only by refinement, but by
+  cancellation of refinement error.}}
+\]
+
+\begin{thebibliography}{9}
+
+\bibitem{archimedes}
+Archimedes,
+\emph{Measurement of a Circle}, in T. L. Heath, ed.,
+\emph{The Works of Archimedes}, Cambridge University Press, 1897.
+
+\bibitem{richardson}
+L. F. Richardson,
+``The approximate arithmetical solution by finite differences of physical
+problems involving differential equations, with an application to the
+stresses in a masonry dam,''
+\emph{Philosophical Transactions of the Royal Society A}, 210 (1911),
+307--357.
+
+\bibitem{trefethen}
+L. N. Trefethen and J. A. C. Weideman,
+``The exponentially convergent trapezoidal rule,''
+\emph{SIAM Review}, 56(3) (2014), 385--458.
+
+\bibitem{borwein}
+J. M. Borwein and P. B. Borwein,
+\emph{Pi and the AGM: A Study in Analytic Number Theory and Computational
+Complexity}, Wiley, 1987.
+
+\end{thebibliography}
+
+\end{document}

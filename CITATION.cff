@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "If you use or discuss this work, please cite it using the metadata below."
+title: "Scale-Optimized Geometric Acceleration of Polygonal Approximations to Pi"
+type: article
+authors:
+  - family-names: Baker
+    given-names: C. Wayne
+date-released: 2026-05-09
+version: revised-preprint-v1
+repository-code: "https://github.com/CWBaker360/scale-optimized-polygonal-pi-acceleration"
+url: "https://github.com/CWBaker360/scale-optimized-polygonal-pi-acceleration"
+abstract: >-
+  A scale-b Richardson-Lagrange acceleration framework for polygonal
+  approximations to pi, with uniform geometric-node weight stability,
+  explicit analytic remainder bounds, high-precision slope verification,
+  and a precise separation between dyadic constructibility and approximate
+  tripling architectures.
+keywords:
+  - polygonal approximation
+  - pi
+  - N-series
+  - Richardson extrapolation
+  - geometric nodes
+  - q-Pochhammer
+  - constructible geometry
+license: proprietary

@@ -1,0 +1,113 @@
+\documentclass[12pt]{article}
+
+\usepackage[margin=0.9in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{microtype}
+\usepackage{parskip}
+\usepackage{titlesec}
+
+\titleformat{\section}{\large\bfseries}{}{0em}{}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\begin{center}
+{\LARGE \textbf{Acceleration of Archimedes' Polygon Method}}\\[4pt]
+{\large via Constructible N-Series Subdivision}\\[10pt]
+{\normalsize Wayne Baker}\\
+{\small April 2026}
+\end{center}
+
+\vspace{8pt}
+
+\section*{Classical Setting}
+
+For an inscribed regular $n$-gon:
+\[
+E_n = 2\pi - P_n \sim C n^{-2}.
+\]
+
+Thus doubling gives:
+\[
+E_{2n} \approx \tfrac{1}{4} E_n.
+\]
+
+\section*{Standard Scaling}
+
+Replacing $n \to kn$ yields:
+\[
+E_{kn} \approx \tfrac{1}{k^2} E_n.
+\]
+
+This follows directly from the asymptotic law.
+
+\section*{Nontrivial Question}
+
+Is $k>2$ refinement realizable constructibly within a geometric framework?
+
+\section*{Main Structural Claim}
+
+A constructible subdivision mechanism exists that realizes
+systematic $k$-fold refinement (specifically $k=3$) with controlled error.
+
+\[
+6 \;\to\; 18 \;\to\; 54 \;\to\; 162 \;\to\; \cdots
+\]
+
+\[
+E_{3n} \approx \tfrac{1}{9} E_n.
+\]
+\newpage
+\section*{Key Distinction}
+
+\[
+\text{Exact algebraic obstruction}
+\;\not\Rightarrow\;
+\text{approximate geometric limitation}
+\]
+
+\section*{Algebraic Perspective}
+
+Let $c = \cos\theta$ and consider:
+\[
+T_n(y) = c.
+\]
+
+\begin{itemize}
+\item Exact solution: $y = \cos(\theta/n)$ lies in a non-quadratic algebraic extension
+\item Constructible approximation: $Y_n(c)$ lies in the quadratic closure of $\mathbb{Q}(c)$
+\end{itemize}
+
+Thus:
+\begin{itemize}
+\item Exact subdivision requires solving $T_n(y) - c = 0$
+\item Approximate subdivision remains constructible
+\end{itemize}
+
+\section*{Numerical Behavior}
+
+\begin{itemize}
+\item Stable $9\times$ error reduction per iteration
+\item Faster convergence than classical doubling
+\item No observed instability in large-scale tests
+\end{itemize}
+
+\section*{Implication}
+
+Classical geometric approximation methods, traditionally constrained
+by exact constructibility, admit a broader class of refinement mechanisms
+when controlled approximation is permitted.
+
+\section*{Open Direction}
+
+\[
+\lim_{n \to \infty} P_n^{(\text{N-Series})}
+\stackrel{?}{=} 2\pi
+\]
+
+\section*{Positioning}
+
+The contribution is not the scaling law itself, but the existence of a
+constructible mechanism that realizes $k>2$ geometric refinement constructibly.
+
+\end{document}
