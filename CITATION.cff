@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use or discuss this work, please cite it using the metadata below."
-title: "Scale-Optimized Geometric Acceleration of Polygonal Approximations to Pi"
+title: "Scale-Optimized Geometric Acceleration of Polygonal Approximations to π"
 type: article
 authors:
   - family-names: Baker
